@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.module.submodule.mapper.ClassesMapper" >
+  <resultMap id="BaseResultMap" type="com.cy.module.submodule.entity.Classes" >
+    <id column="cla_id" property="claId" jdbcType="VARCHAR" />
+    <result column="cla_name" property="claName" jdbcType="VARCHAR" />
+    <result column="cla_total_num" property="claTotalNum" jdbcType="INTEGER" />
+  </resultMap>
+
+  <!--多表-->
+  <sql id="Example_Where_Clause" >
+      <foreach collection="classesExample.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+        </if>
+      </foreach>
+  </sql>
+
+  <sql id="Example_Where_Clause_Single" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <sql id="Update_By_Example_Where_Clause_Single" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cla_id, cla_name, cla_total_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cy.module.submodule.entity.ClassesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from classes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause_Single" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    where cla_id = #{claId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from classes
+    where cla_id = #{claId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cy.module.submodule.entity.ClassesExample" >
+    delete from classes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause_Single" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cy.module.submodule.entity.Classes" >
+    insert into classes (cla_id, cla_name, cla_total_num
+      )
+    values (#{claId,jdbcType=VARCHAR}, #{claName,jdbcType=VARCHAR}, #{claTotalNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cy.module.submodule.entity.Classes" >
+    insert into classes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="claId != null" >
+        cla_id,
+      </if>
+      <if test="claName != null" >
+        cla_name,
+      </if>
+      <if test="claTotalNum != null" >
+        cla_total_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="claId != null" >
+        #{claId,jdbcType=VARCHAR},
+      </if>
+      <if test="claName != null" >
+        #{claName,jdbcType=VARCHAR},
+      </if>
+      <if test="claTotalNum != null" >
+        #{claTotalNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cy.module.submodule.entity.ClassesExample" resultType="java.lang.Integer" >
+    select count(*) from classes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause_Single" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update classes
+    <set >
+      <if test="record.claId != null" >
+        cla_id = #{record.claId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claName != null" >
+        cla_name = #{record.claName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claTotalNum != null" >
+        cla_total_num = #{record.claTotalNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause_Single" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update classes
+    set cla_id = #{record.claId,jdbcType=VARCHAR},
+      cla_name = #{record.claName,jdbcType=VARCHAR},
+      cla_total_num = #{record.claTotalNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause_Single" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cy.module.submodule.entity.Classes" >
+    update classes
+    <set >
+      <if test="claName != null" >
+        cla_name = #{claName,jdbcType=VARCHAR},
+      </if>
+      <if test="claTotalNum != null" >
+        cla_total_num = #{claTotalNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cla_id = #{claId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cy.module.submodule.entity.Classes" >
+    update classes
+    set cla_name = #{claName,jdbcType=VARCHAR},
+      cla_total_num = #{claTotalNum,jdbcType=INTEGER}
+    where cla_id = #{claId,jdbcType=VARCHAR}
+  </update>
+</mapper>
