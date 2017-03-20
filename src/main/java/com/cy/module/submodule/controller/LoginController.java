@@ -13,7 +13,7 @@ public class LoginController {
     @RequestMapping(value = "/login.do")
     public String login() {
 
-        return "redirect:/studentController/showAllStudents.do";
+        return "redirect:/studentController/showAllStudents.do?pageNum=1&pageSize=5";
     }
 
 

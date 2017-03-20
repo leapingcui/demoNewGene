@@ -2,6 +2,7 @@ package com.cy.module.submodule.service;
 
 import com.cy.module.submodule.entity.Student;
 import com.cy.module.submodule.entity.StudentMulti;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface StudentService {
 
-    List<StudentMulti> selectAllMulti();
+    PageInfo<StudentMulti> selectAllMulti(Integer pageNum, Integer pageSize);
 
     int insertSelective(Student record);
 

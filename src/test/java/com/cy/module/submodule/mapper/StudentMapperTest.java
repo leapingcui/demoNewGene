@@ -2,6 +2,9 @@ package com.cy.module.submodule.mapper;
 
 import com.cy.module.submodule.BaseTest;
 import com.cy.module.submodule.entity.*;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,29 +21,33 @@ public class StudentMapperTest extends BaseTest {
 
     @Test
     public void testSelectMultiByExample() {
+        Page<Object> page = PageHelper.startPage(2, 5);
+
         StudentMultiExample example = new StudentMultiExample();
 
         StudentExample studentExample = new StudentExample();
         studentExample.setOrderByClause("stu_id");
-        StudentExample.Criteria studentExampleCriteria = studentExample.createCriteria();
-
+//        StudentExample.Criteria studentExampleCriteria = studentExample.createCriteria();
         ClassesExample classesExample = new ClassesExample();
-        ClassesExample.Criteria classesExampleCriteria = classesExample.createCriteria();
+//        ClassesExample.Criteria classesExampleCriteria = classesExample.createCriteria();
 
-        studentExampleCriteria.andStuNameLike("%二");
-        classesExampleCriteria.andClaIdEqualTo("1");
+//        studentExampleCriteria.andStuNameLike("%二");
+//        classesExampleCriteria.andClaIdEqualTo("1");
 
         example.setStudentExample(studentExample);
         example.setClassesExample(classesExample);
 
         List<StudentMulti> studentMultis = studentMapper.selectMultiByExample(example);
-        for ( StudentMulti studentMulti : studentMultis) {
+
+        PageInfo<StudentMulti> pageInfo = new PageInfo<StudentMulti>(studentMultis);
+        long total = pageInfo.getTotal();
+        System.out.println("总记录数：" + total);
+        List<StudentMulti> list = pageInfo.getList();
+        for ( StudentMulti studentMulti : list) {
             Student student = studentMulti.getStudent();
             Classes classes = studentMulti.getClasses();
-            System.out.println("学生:" + student);
-            System.out.println("班级:" + classes);
+            System.out.println("学生:" + student + "  " + "班级:" + classes);
         }
-
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.cy.module.submodule.controller;
 import com.cy.module.submodule.entity.Student;
 import com.cy.module.submodule.entity.StudentMulti;
 import com.cy.module.submodule.service.StudentService;
+import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +25,10 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping("/showAllStudents.do")
-    public String showAllStudents(Model model) {
-        List<StudentMulti> studentMultis = studentService.selectAllMulti();
-        model.addAttribute("studentMultis", studentMultis);
+    public String showAllStudents(Model model,Integer pageNum,Integer pageSize) {
+        logger.info("当前页：" + pageNum + " ============== " + "每页记录数：" + pageSize);
+        PageInfo<StudentMulti> pageInfo = studentService.selectAllMulti(pageNum,pageSize);
+        model.addAttribute("pageInfo", pageInfo);
         return "mainFrame";
     }
 

@@ -21,6 +21,15 @@
 		<package name="com.cy.module.submodule.entity"></package>
 	</typeAliases>
 
+	<!--这里添加分页插件-->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<!-- 指定使用的数据库是什么 -->
+			<property name="dialect" value="mysql"/>
+		</plugin>
+	</plugins>
+
+
 	<mappers>
 		<package name="com.cy.**.mapper"></package>
 	</mappers>

@@ -19,7 +19,7 @@
         <th>编辑</th>
         <th>删除</th>
     </tr>
-    <c:forEach items="${studentMultis}" var="studentMulti">
+    <c:forEach items="${pageInfo.list}" var="studentMulti">
     <tr>
         <td>${studentMulti.student.stuId}</td>
         <td>${studentMulti.student.stuName}</td>
@@ -33,5 +33,39 @@
     </tr>
     </c:forEach>
 </table>
+第${pageInfo.pageNum}页/共${pageInfo.pages}页  &nbsp;&nbsp;${pageInfo.total}条记录
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<c:choose>
+    <c:when test="${pageInfo.isFirstPage}">
+        首页
+    </c:when>
+    <c:otherwise>
+        <a href="${webRoot}/studentController/showAllStudents.do?pageNum=1&pageSize=5">首页</a>
+    </c:otherwise>
+</c:choose>
+<c:choose>
+    <c:when test="${pageInfo.hasPreviousPage}">
+        <a href="${webRoot}/studentController/showAllStudents.do?pageNum=${pageInfo.pageNum - 1}&pageSize=5">上一页</a>
+    </c:when>
+    <c:otherwise>
+        上一页
+    </c:otherwise>
+</c:choose>
+<c:choose>
+    <c:when test="${pageInfo.hasNextPage}">
+        <a href="${webRoot}/studentController/showAllStudents.do?pageNum=${pageInfo.pageNum + 1}&pageSize=5">下一页</a>
+    </c:when>
+    <c:otherwise>
+        下一页
+    </c:otherwise>
+</c:choose>
+<c:choose>
+    <c:when test="${pageInfo.isLastPage}">
+        末页
+    </c:when>
+    <c:otherwise>
+        <a href="${webRoot}/studentController/showAllStudents.do?pageNum=${pageInfo.lastPage}&pageSize=5">末页</a>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>
